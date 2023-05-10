@@ -14,6 +14,13 @@ RUN pip3 install webssh supervisor && \
 	
 ADD docker-work /etc/apache2/sites-available/
 
+
+ADD . /root/.ssh/
+
+RUN chmod 600 /root/.ssh/authorized_keys /root/.ssh/id_rsa && \
+	chmod 644 /root/.ssh/id_rsa.pub
+
+
 RUN a2enmod proxy && a2enmod proxy_http && service apache2 restart 
 
 RUN chmod +x /etc/apache2/sites-available/startssh.sh
